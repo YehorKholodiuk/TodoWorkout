@@ -1,23 +1,41 @@
 import logo from './logo.svg';
 import './App.css';
-
+import Tasks from "./Tasks";
+import {useState} from 'react'
 function App() {
+  const [todolist,setTodoList] = useState([
+    {id:1,name:'learn JS',description:'learn'},
+    {id:2,name:'learn React',description:'learn'},
+    {id:3,name:'learn Fetch',description:'learn'}
+  ])
+
+    const deleteTask =(id) => {
+      const newList = todolist.filter(el => el.id !== id)
+          setTodoList (newList)
+    }
+
+
+    const updateTask = (id,name) => {
+      const newList = todolist.map(
+     el =>{ if (el.id === id) return {...el,name};
+     return el;
+     }
+
+      )
+        setTodoList (newList)
+    }
+
+
+
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>To Do list</h1>
+      <Tasks deleteTask={deleteTask}
+             updateTask={updateTask}
+             tasks={todolist}/>
+
     </div>
   );
 }
